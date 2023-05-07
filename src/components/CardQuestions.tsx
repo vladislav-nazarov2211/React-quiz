@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux-toolkit/store/store';
 import { QuestionType } from '../redux-toolkit/types';
 import { QuestionsList } from './QuestionsList';
-import { setScore, setPercent } from '../redux-toolkit/slices/questionsSlice';
+import { setScore, setPercent, setcurrentCardQuestion } from '../redux-toolkit/slices/questionsSlice';
 import { Preloader } from './Preloader';
 
 type PropsType = {
@@ -16,8 +16,13 @@ type PropsType = {
 
 export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentCardQuestion}) => {
     const questions = useSelector((state: RootState) => state.questions.questions)
+    const totalCards = useSelector((state: RootState) => state.questions.totalCards)
     const percent = useSelector((state: RootState) => state.questions.percent)
     const dispatch = useDispatch<AppDispatch>()
+    
+    // useEffect(() => {
+    //     dispatch(setcurrentCardQuestion(currentCardQuestion))
+    // }, [])
 
     const [currentQuestion, setCurrentQuestion] = useState<QuestionType | null>(null)
     
@@ -29,11 +34,11 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
                 }
             })
         }
-    }, [questions])
+    }, [questions]) // если перезагружаем любую катрочку, кроме начальной, то questions сначала 0 и отрисовывать нечего, поэтому указываем зависимость
 
     useEffect(() => {
-        dispatch(setPercent(currentCardQuestion))
-    }, [currentCardQuestion])
+        dispatch(setPercent(currentCardQuestion))  // если перезагружаем любую катрочку, кроме начальной, то totalCards сначала 0 и процент делится на 0, поэтому указываем зависимость
+    }, [totalCards])
     
     const [value, setValue] = useState<number>(0);
 

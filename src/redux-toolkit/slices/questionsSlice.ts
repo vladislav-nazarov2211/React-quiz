@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { QuestionsType } from '../types'
-import { act } from '@testing-library/react'
 
 const initialState: QuestionsType = {
     questions: [],
@@ -27,6 +26,7 @@ const questionsSlice = createSlice({
             state.score = state.score + action.payload
         },
         setPercent(state, action) {
+            console.log(action.payload, state.totalCards)
             state.percent = (((action.payload) * 100) / state.totalCards)
         }
     }  
