@@ -2,8 +2,12 @@ import React from 'react';
 import images1 from './../img/icons/clapping.svg'
 import images2 from './../img/icons/leaflet.svg'
 import images3 from './../img/icons/video-tutorial.png'
+import { useNav } from '../hook/useNav';
 
 export const Final = () => {
+
+	const {path, cardNext, cardPrev} = useNav()
+
     return (
         <div className="plate">
 		<div className="cover-content-wrapper">

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import image from './../img/icons/list.png'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux-toolkit/store/store';
 import { QuestionType } from '../redux-toolkit/types';
 import { QuestionsList } from './QuestionsList';
-import { setScore, setPercent, setcurrentCardQuestion } from '../redux-toolkit/slices/questionsSlice';
-import { Preloader } from './Preloader';
+import { setPercent, setScoreAndAnswer } from '../redux-toolkit/slices/questionsSlice';
 
 type PropsType = {
     cardNext: string,
@@ -19,17 +18,14 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
     const totalCards = useSelector((state: RootState) => state.questions.totalCards)
     const percent = useSelector((state: RootState) => state.questions.percent)
     const dispatch = useDispatch<AppDispatch>()
+    const navigate = useNavigate()
     
-    // useEffect(() => {
-    //     dispatch(setcurrentCardQuestion(currentCardQuestion))
-    // }, [])
-
     const [currentQuestion, setCurrentQuestion] = useState<QuestionType | null>(null)
     
     useEffect(() => {
         if (currentCardQuestion) {
-            questions.find((item, index) => {
-                if ((index + 1) == parseInt(currentCardQuestion)) {
+            questions.find((item) => {
+                if ((item.id) == parseInt(currentCardQuestion)) {
                     setCurrentQuestion(item)
                 }
             })
@@ -46,17 +42,15 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
        setValue(e.target.value);
     }
 
-    const saveAnswer = (value: number) => {
-        if (currentQuestion) {
-            let answer = currentQuestion.values.find((item, index) => {
-                if ((index + 1) == value) {
-                    return item
-                } 
-            }) 
-            
-            if (currentQuestion.correct == answer) {
-                dispatch(setScore(1))
+    const saveAnswer = (value: number, e: any) => {
+        e.preventDefault()
+        if (!value) {
+            alert('Выберете вариант ответа!')
+        } else {
+            if (currentQuestion) {
+                dispatch(setScoreAndAnswer({value, currentCardQuestion})) 
             }
+            navigate(`${cardNext}`)
         } 
     }    
 
@@ -74,15 +68,12 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
             <div className="plate-content">
                 <h2 className="title-main">{currentQuestion ? currentQuestion.question : ''}</h2>
                 <div className="radio-group">
-                    {currentQuestion ? (currentQuestion.values.map((item, index) => {
+                    {currentQuestion ? (currentQuestion.values.map((item) => {
                         return <QuestionsList 
-                                    key={index} 
-                                    index={index} 
+                                    key={item.id} 
                                     item={item} 
                                     changeValue={changeValue} 
-                                    value={value} 
-                                    setValue={setValue} 
-                                    currentCardQuestion={currentCardQuestion}   
+                                    value={value}    
                                 />
                     })) : ''}                 
                 </div>
@@ -93,15 +84,9 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
                 <div className="plate-footer__progress">
 
                     <div className="progress">
-                        {percent && (percent != Infinity) ? 
-                            <div className="progress__label">
-                                Готово: <strong>{percent}%</strong>
-                            </div>
-                        :
-                            <div className="preloader__position">
-                                <Preloader />
-                            </div>   
-                        }
+                        <div className="progress__label">
+                            Готово: <strong>{percent}%</strong>
+                        </div>
                         <div className="progress__line-wrapper">
                             <div className="progress__line-bar" style={{width: `${percent}%`}}></div>
                         </div>
@@ -110,7 +95,7 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
                 </div>
                 <div className="plate-footer__buttons">
                     <NavLink to={cardPrev} className="button button--back">Назад</NavLink>
-                    <NavLink to={cardNext} onClick={() => {saveAnswer(value)}} className="button">Далее</NavLink>
+                    <button onClick={(e) => {saveAnswer(value, e)}} className="button">Далее</button>
                 </div>
             </div>
 	    </div>

@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { QuestionsType } from '../types'
+import { QuestionType, QuestionsType } from '../types'
 
 const initialState: QuestionsType = {
     questions: [],
-    score: 0,
+    totalScore: 0,
     percent: 0,
     totalCards: 0,
-    currentCardQuestion: ''
+    currentCardQuestion: '',
 }
 
 const questionsSlice = createSlice({
@@ -14,7 +14,17 @@ const questionsSlice = createSlice({
     initialState,
     reducers: {
         setQuestions(state, action) {
-            state.questions = action.payload
+            let data = action.payload.map((item: QuestionType) => {
+                return {...item, answer: '', score: 0}
+            })
+            state.questions = data
+        },
+        setScoreAndAnswer(state, action) {
+            state.questions.map((item) => {
+                if (item.id === parseInt(action.payload.currentCardQuestion)) {
+                    // if (item.correct === )
+                }
+            })
         },
         setTotalCards(state) {
             state.totalCards = state.questions.length
@@ -22,15 +32,14 @@ const questionsSlice = createSlice({
         setcurrentCardQuestion(state, action) {
             state.currentCardQuestion = action.payload
         },
-        setScore(state, action) {
-            state.score = state.score + action.payload
-        },
+        // setScore(state, action) {
+        //     state.score = state.score + action.payload
+        // },
         setPercent(state, action) {
-            console.log(action.payload, state.totalCards)
-            state.percent = (((action.payload) * 100) / state.totalCards)
+            state.percent = (((action.payload - 1) * 100) / state.totalCards)
         }
     }  
 })
 
-export const { setQuestions, setTotalCards, setScore, setPercent, setcurrentCardQuestion } = questionsSlice.actions
+export const { setQuestions, setTotalCards, setPercent, setcurrentCardQuestion, setScoreAndAnswer } = questionsSlice.actions
 export default questionsSlice.reducer

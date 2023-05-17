@@ -1,14 +1,11 @@
-import React, { useEffect } from 'react';
-import { CardQuestions } from '../components/CardQuestions';
-import { useLocation } from 'react-router';
+import React from 'react';
+import { CardQuestions } from '../components/CardQuestions';;
+import { useNav } from '../hook/useNav';
 
 export const Card3 = () => {
 
-	const location = useLocation()
-    const path: string =  location.pathname.substring(1)
-    const cardNext = (parseInt(path) + 1).toString()
-    const cardPrev = (parseInt(path) - 1).toString()
-
+	const {path, cardNext, cardPrev} = useNav()
+    
     return (
         <CardQuestions cardNext={'/' + cardNext} cardPrev={'/' + cardPrev} currentCardQuestion={path} />
     )

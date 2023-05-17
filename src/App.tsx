@@ -7,6 +7,7 @@ import { setQuestions, setTotalCards, setPercent } from './redux-toolkit/slices/
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from './redux-toolkit/store/store';
 
+
 function App() {
 	const currentCardQuestion = useSelector((state: RootState) => state.questions.currentCardQuestion)
 	const dispatch = useDispatch<AppDispatch>()
@@ -15,29 +16,34 @@ function App() {
 		dispatch(setQuestions(
 			[
 				{
-				question: "Сколько полос на флаге США?",
-				values: ["16", "15", "10", "13"],
-				correct: "13"
+					id: 1,	
+					question: "Сколько полос на флаге США?",
+					values: [{id: 1, value: "16"}, {id: 2, value: "15"}, {id: 3, value: "10"}, {id: 4, value: "13"}],
+					correct: "13"
 				},
 				{
-				question: "Какое национальное животное Австралии?",
-				values: ["Кенгуру", "Кошка", "Собака", "Лев"],
-				correct: "Кенгуру"
+					id: 2,
+					question: "Какое национальное животное Австралии?",
+					values: [{id: 1, value: "Кенгуру"}, , {id: 2, value: "Кошка"}, {id: 3, value: "Собака"}, {id: 4, value: "Лев"}],
+					correct: "Кенгуру"
 				},
 				{
-				question: "Сколько дней нужно, чтобы Земля совершила оборот вокруг Солнца?",
-				values: ["153", "215", "365", "413"],
-				correct: "365"
+					id: 3,
+					question: "Сколько дней нужно, чтобы Земля совершила оборот вокруг Солнца?",
+					values: [{id: 1, value: "153"}, {id: 2, value: "215"}, {id: 3, value: "365"}, {id: 4, value: "413"}],
+					correct: "365"
 				},
 				{
-				question: "Какая валюта Дании?",
-				values: ["Евро", "Рубль", "Доллар", "Крона"],
-				correct: "Крона"
+					id: 4,		
+					question: "Какая валюта Дании?",
+					values: [{id: 1, value: "Евро"}, {id: 2, value: "Рубль"}, {id: 3, value: "Доллар"}, {id: 4, value: "Крона"}],
+					correct: "Крона"
 				},
 				{
-				question: "Сколько элементов в периодической таблице?",
-				values: ["161", "118", "120", "103"],
-				correct: "118"
+					id: 5,
+					question: "Сколько элементов в периодической таблице?",
+					values: [{id: 1, value: "161"}, {id: 2, value: "118"}, {id: 3, value: "120"}, {id: 4, value: "103"}],
+					correct: "118"
 				}
 			]
 		))

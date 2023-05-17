@@ -2,7 +2,9 @@ import React from 'react';
 import images from './../img/pictures/html.png'
 import { NavLink } from 'react-router-dom';
 
+
 export const CardStart = () => {
+    
     return (
         <div className="plate">
             <div className="cover-content-wrapper">
