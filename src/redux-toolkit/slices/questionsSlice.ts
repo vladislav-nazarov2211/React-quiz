@@ -15,15 +15,26 @@ const questionsSlice = createSlice({
     reducers: {
         setQuestions(state, action) {
             let data = action.payload.map((item: QuestionType) => {
-                return {...item, answer: '', score: 0}
+                return {...item, answer: null, score: 0}
             })
             state.questions = data
         },
         setScoreAndAnswer(state, action) {
-            state.questions.map((item) => {
+            //@ts-ignore
+            state.questions = state.questions.map((item) => {
                 if (item.id === parseInt(action.payload.currentCardQuestion)) {
-                    // if (item.correct === )
+                    let answer
+                    item.values.forEach((el: any) => {
+                        if (el.id === parseInt(action.payload.value)) {
+                            answer = {id: el.id, value: el.value}
+                        }
+                    })
+                    //@ts-ignore
+                    return {...item, answer: answer, score: answer.value === item.correct ? 1 : 0}
+                } else {
+                    return item
                 }
+            
             })
         },
         setTotalCards(state) {
@@ -32,14 +43,18 @@ const questionsSlice = createSlice({
         setcurrentCardQuestion(state, action) {
             state.currentCardQuestion = action.payload
         },
-        // setScore(state, action) {
-        //     state.score = state.score + action.payload
-        // },
+        setTotalScore(state) {
+            let initScore = 0
+            state.questions.forEach((item) => {
+                initScore = initScore + item.score
+            })
+            state.totalScore = initScore
+        },
         setPercent(state, action) {
             state.percent = (((action.payload - 1) * 100) / state.totalCards)
         }
     }  
 })
 
-export const { setQuestions, setTotalCards, setPercent, setcurrentCardQuestion, setScoreAndAnswer } = questionsSlice.actions
+export const { setQuestions, setTotalCards, setPercent, setcurrentCardQuestion, setScoreAndAnswer, setTotalScore } = questionsSlice.actions
 export default questionsSlice.reducer

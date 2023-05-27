@@ -24,7 +24,7 @@ function App() {
 				{
 					id: 2,
 					question: "Какое национальное животное Австралии?",
-					values: [{id: 1, value: "Кенгуру"}, , {id: 2, value: "Кошка"}, {id: 3, value: "Собака"}, {id: 4, value: "Лев"}],
+					values: [{id: 1, value: "Кенгуру"}, {id: 2, value: "Кошка"}, {id: 3, value: "Собака"}, {id: 4, value: "Лев"}],
 					correct: "Кенгуру"
 				},
 				{

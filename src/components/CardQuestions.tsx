@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../redux-toolkit/store/store';
 import { QuestionType } from '../redux-toolkit/types';
 import { QuestionsList } from './QuestionsList';
-import { setPercent, setScoreAndAnswer } from '../redux-toolkit/slices/questionsSlice';
+import { setPercent, setScoreAndAnswer, setTotalScore } from '../redux-toolkit/slices/questionsSlice';
 
 type PropsType = {
     cardNext: string,
@@ -36,13 +36,20 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
         dispatch(setPercent(currentCardQuestion))  // если перезагружаем любую катрочку, кроме начальной, то totalCards сначала 0 и процент делится на 0, поэтому указываем зависимость
     }, [totalCards])
     
-    const [value, setValue] = useState<number>(0);
+    const [value, setValue] = useState<string>('');
+
+    useEffect(() => {
+        if (currentQuestion && currentQuestion.answer != null) {
+            let value = (currentQuestion.answer.id).toString()
+            setValue(value)
+        }
+    }, [currentQuestion])
 
     const changeValue = (e: any) => {
        setValue(e.target.value);
     }
 
-    const saveAnswer = (value: number, e: any) => {
+    const saveAnswer = (value: string, e: any) => {
         e.preventDefault()
         if (!value) {
             alert('Выберете вариант ответа!')
@@ -52,9 +59,11 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
             }
             navigate(`${cardNext}`)
         } 
-    }    
 
-    
+        if (totalCards === parseInt(currentCardQuestion)) {
+            dispatch(setTotalScore()) 
+        }
+    }    
 
     return (
         <div className="plate">
@@ -73,7 +82,8 @@ export const CardQuestions: React.FC<PropsType> = ({cardNext, cardPrev, currentC
                                     key={item.id} 
                                     item={item} 
                                     changeValue={changeValue} 
-                                    value={value}    
+                                    value={value}  
+                                    currentQuestion={currentQuestion} 
                                 />
                     })) : ''}                 
                 </div>

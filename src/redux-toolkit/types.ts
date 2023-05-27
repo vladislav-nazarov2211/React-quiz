@@ -8,7 +8,7 @@ export type QuestionType = {
     question: string
     values: Array<values>
     correct: string
-    answer: string 
+    answer: {id: number, value: string} | null
     score: number
 }
 

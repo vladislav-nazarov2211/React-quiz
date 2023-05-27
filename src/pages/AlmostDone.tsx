@@ -24,7 +24,7 @@ export const AmostDone = () => {
         setShowMode(true)
         if (captchaVal != '') {
             //@ts-ignore
-            emailjs.send('service_kc39ifp', 'template_vl5aa0a', {user_name: '', user_email: emailVal, message: {score: state.score, total: state.totalCards}}, 'IQs1y7jpaociV_Jcp')
+            emailjs.send('service_kc39ifp', 'template_vl5aa0a', {user_name: '', user_email: emailVal, message: {score: state.totalScore, total: state.totalCards}}, 'IQs1y7jpaociV_Jcp')
             .then((result) => {
                 console.log(result.text);
             }, (error) => {
