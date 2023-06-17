@@ -6,10 +6,6 @@ import { setQuestions, setTotalCards, setPercent } from './redux-toolkit/slices/
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from './redux-toolkit/store/store';
 import { db } from './firebase';
-import { data } from './redux-toolkit/store/data';
-
-
-
 
 
 function App() {
@@ -17,23 +13,14 @@ function App() {
 	const dispatch = useDispatch<AppDispatch>()
 
 	useEffect(() => {
-		dispatch(setQuestions(data))
-		dispatch(setTotalCards())
-		dispatch(setPercent(currentCardQuestion))
+	const questions = ref(db, "questions");
+		onValue(questions, (snapshot) => {
+			const data = snapshot.val()
+			dispatch(setQuestions(data))
+			dispatch(setTotalCards())
+			dispatch(setPercent(currentCardQuestion))
+		});
 	}, [])
-
-
-	// useEffect(() => {
-	// const questions = ref(db, "questions");
-	// console.log(questions)
-	// 	onValue(questions, (snapshot) => {
-	// 		const data = snapshot.val()
-	// 		console.log(data)
-	// 		dispatch(setQuestions(data))
-	// 		dispatch(setTotalCards())
-	// 		dispatch(setPercent(currentCardQuestion))
-	// 	});
-	// }, [])
 
   	return (
 		<Router />
