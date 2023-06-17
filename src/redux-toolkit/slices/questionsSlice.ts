@@ -1,8 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { QuestionType, QuestionsType } from '../types'
 
+let questionsStorage = (sessionStorage.getItem("questions"))
+
 const initialState: QuestionsType = {
-    questions: [],
+    questions: (questionsStorage === null ? [] : JSON.parse(sessionStorage.getItem("questions") || '')),
     totalScore: 0,
     percent: 0,
     totalCards: 0,
@@ -14,10 +16,12 @@ const questionsSlice = createSlice({
     initialState,
     reducers: {
         setQuestions(state, action) {
-            let data = action.payload.map((item: QuestionType) => {
-                return {...item, answer: null, score: 0}
-            })
-            state.questions = data
+            if (state.questions.length === 0) {
+                let data = action.payload.map((item: QuestionType) => {
+                    return {...item, answer: null, score: 0}
+                })
+                state.questions = data
+            }
         },
         setScoreAndAnswer(state, action) {
             //@ts-ignore
@@ -36,6 +40,7 @@ const questionsSlice = createSlice({
                 }
             
             })
+            sessionStorage.setItem("questions", JSON.stringify(state.questions))
         },
         setTotalCards(state) {
             state.totalCards = state.questions.length

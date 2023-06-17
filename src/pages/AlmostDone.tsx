@@ -9,7 +9,7 @@ import emailjs from '@emailjs/browser';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux-toolkit/store/store';
 
-export const AmostDone = () => {
+export const AlmostDone = () => {
 
     const {path, cardNext, cardPrev} = useNav()
     const [showMode, setShowMode] = useState<boolean>(false)
@@ -55,7 +55,7 @@ export const AmostDone = () => {
                         <input 
                             {...register('email', {required: true, pattern: /^[\w-\.]+@[\w-]+\.[a-z]{2,4}$/i, maxLength: 40})}
                             className="input-email" 
-                            type="email" id="email" 
+                            type="text" id="email" 
                             placeholder="Ваш Email" 
                             name="email"
                             onChange={(e) => {setEmailVal(e.target.value)}}
@@ -91,7 +91,7 @@ export const AmostDone = () => {
                         <div className="checkbox__fake"></div>
                         <div className="checkbox__text">С политикой конфеденциальности ознакомлен</div>
                         {errors.checkbox && errors.checkbox.type === "required" && (
-                            <div className='emailError'>Для продолжения необходимо согласиться с условиями!</div>
+                            <div className='checkedError'>Для продолжения необходимо согласиться с условиями!</div>
                         )}
                     </label>
 

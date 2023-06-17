@@ -6,7 +6,7 @@ import { Card2 } from '../pages/Card2';
 import { Card3 } from '../pages/Card3';
 import { Card4 } from '../pages/Card4';
 import { Card5 } from '../pages/Card5';
-import { AmostDone } from '../pages/AlmostDone';
+import { AlmostDone } from '../pages/AlmostDone';
 import { Final } from '../pages/Final';
 
 export const Router = () => {
@@ -20,7 +20,7 @@ export const Router = () => {
 				<Route path='/3' element={<Card3 />}/>
 				<Route path='/4' element={<Card4 />}/>
 				<Route path='/5' element={<Card5 />}/>
-				<Route path='/almostdone' element={<AmostDone />}/>
+				<Route path='/almostdone' element={<AlmostDone />}/>
 				<Route path='/final' element={<Final />}/>
 			</Routes>  
     	</BrowserRouter>

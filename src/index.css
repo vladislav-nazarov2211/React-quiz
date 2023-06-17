@@ -51,6 +51,7 @@ body {
   text-align: center;
   color: #777777;
   margin-top: -50px;
+  position: relative;
 }
 .title-img {
   margin-bottom: 25px;
@@ -995,5 +996,14 @@ body {
     top: -70px;
 }
 .emailError {
-  color: red
+  color: red;
+  position: absolute;
+  right: 0
+}
+
+.checkedError {
+  color: red;
+  position: absolute;
+  right: 0;
+  bottom: -25px;
 }

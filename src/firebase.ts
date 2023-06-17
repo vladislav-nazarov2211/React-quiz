@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app"
 import { getDatabase } from "firebase/database"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAqSuhpcEP3FnbEk-n0uYE01XScgBf716c",
-  authDomain: "quiz-dbf2d.firebaseapp.com",
-  databaseURL: "https://quiz-dbf2d-default-rtdb.firebaseio.com",
-  projectId: "quiz-dbf2d",
-  storageBucket: "quiz-dbf2d.appspot.com",
-  messagingSenderId: "676780901647",
-  appId: "1:676780901647:web:b2b1b8f6b65986a307aa7a"
+  apiKey: "AIzaSyA1qWlH3YgcUIrEjblLRssucMJDw6VxDjk",
+  authDomain: "quiz-react-46f8f.firebaseapp.com",
+  databaseURL: "https://quiz-react-46f8f-default-rtdb.firebaseio.com",
+  projectId: "quiz-react-46f8f",
+  storageBucket: "quiz-react-46f8f.appspot.com",
+  messagingSenderId: "1082625746637",
+  appId: "1:1082625746637:web:84ca2f056b923f707e6b84"
 };
 
 
